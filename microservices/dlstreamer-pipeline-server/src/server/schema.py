@@ -332,9 +332,6 @@ destination = {
               "sync-with-destination": {
                 "type": "boolean"
               },
-              "bitrate": {
-                "type": "integer"
-              },
               "overlay": {
                 "type": "boolean",
                 "default": True
@@ -420,9 +417,6 @@ destination = {
                 },
                 "sync-with-destination": {
                   "type": "boolean"
-                },
-                "bitrate": {
-                  "type": "integer"
                 },
                 "overlay": {
                   "type": "boolean"

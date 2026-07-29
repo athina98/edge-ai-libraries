@@ -16,15 +16,15 @@ class GStreamerWebRTCManager:
 
     _source_mediamtx = "appsrc name=webrtc_source format=GST_FORMAT_TIME "
     _WebRTCVideoPipeline = (
-        " ! videoconvert {gvawatermark} "
-        " ! openh264enc complexity=low name=h264enc"
-        " ! video/x-h264,profile=baseline "
+        " ! videoconvert ! video/x-raw,format=I420 {gvawatermark} "
+        " ! vp9enc name=vp9enc cpu-used=4 lag-in-frames=0 "
+        " ! video/x-vp9 "
         " ! whipclientsink signaller::whip-endpoint="
     )
     _WebRTCVideoPipeline_jpeg = (
-        " ! jpegdec ! videoconvert {gvawatermark} "
-        " ! openh264enc complexity=low name=h264enc "
-        " ! video/x-h264,profile=baseline "
+        " ! jpegdec ! videoconvert ! video/x-raw,format=I420 {gvawatermark} "
+        " ! vp9enc name=vp9enc cpu-used=4 lag-in-frames=0 "
+        " ! video/x-vp9 "
         " ! whipclientsink signaller::whip-endpoint="
     )
 

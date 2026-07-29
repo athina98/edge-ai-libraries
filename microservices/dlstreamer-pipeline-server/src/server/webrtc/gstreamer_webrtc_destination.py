@@ -41,7 +41,6 @@ class GStreamerWebRTCDestination(AppDestination):
         self._sync_with_destination = request.get("sync-with-destination", True)
         self.overlay = request.get("overlay",True)
         self.overlay_properties = request.get("overlay-properties", request.get("gvawatermark", {}))
-        self.bitrate = request.get("bitrate", 2048)
 
     def _init_stream(self, sample):
         self._frame_size = sample.get_buffer().get_size()
@@ -74,12 +73,6 @@ class GStreamerWebRTCDestination(AppDestination):
         if self._cache_length:
             self._app_src.set_property("max-bytes",
                                        int(self._frame_size*self._cache_length))
-        encoder = webrtc_pipeline.get_by_name("h264enc")
-        if self.bitrate and encoder:
-            # if encoder has the bitrate property, set it
-            if encoder.find_property("bitrate") is not None:
-                self._logger.debug("Setting bitrate to {} for WebRTC stream".format(self.bitrate))
-                encoder.set_property("bitrate", self.bitrate)
         self._app_src.connect('need-data', self._on_need_data)
         self._app_src.connect('enough-data', self._on_enough_data)
 
